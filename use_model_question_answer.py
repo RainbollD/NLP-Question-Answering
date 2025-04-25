@@ -21,7 +21,7 @@ def predict_qa(data_questions_answers):
     model_qa = create_model()
     predictions = []
     for data_question_answer in data_questions_answers:
-        info_model = model_qa(**data_question_answer)
+        info_model = model_qa(data_question_answer["question"], data_question_answer["context"])
 
         predictions.append(info_model["answer"])
 
