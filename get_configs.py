@@ -7,7 +7,8 @@ class Paths:
     def __init__(self, config_path='configs.json'):
         self.config_path = config_path
         self.path_datasets = ''
-        self.path_raw_data_txt = ''
+        self.path_test_data = ''
+        self.path_save_test_results = ''
         self.path_model_qa = ''
         self.model_name = ''
         self.path_result_model_qa_fine_tuning = ''
@@ -21,7 +22,8 @@ class Paths:
             data_configs = json.load(file)
 
         self.path_datasets = data_configs.get('path_datasets', '')
-        self.path_raw_data_txt = data_configs.get('path_raw_data_txt', '')
+        self.path_test_data = data_configs.get('path_test_data', '')
+        self.path_save_test_results = data_configs.get('path_save_test_results', '')
         self.path_model_qa = data_configs.get('path_model_qa', '')
         self.model_name = data_configs.get('model_name_qa', '')
         self.path_result_model_qa_fine_tuning = data_configs.get('path_result_model_qa_fine_tuning', '')
@@ -37,9 +39,13 @@ class Paths:
         """Path for data"""
         return self.path_datasets
 
-    def get_raw_data_txt_path(self):
-        """Path to data without cleaning"""
-        return self.path_raw_data_txt
+    def get_path_test_data(self):
+        """Path to data test"""
+        return self.path_test_data
+
+    def get_path_save_test_results(self):
+        """Path to save results"""
+        return self.path_save_test_results
 
     def get_model_qa_path(self):
         """Path to model"""

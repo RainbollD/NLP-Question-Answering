@@ -1,6 +1,7 @@
 {
   "path_datasets": "data/json",
-  "path_raw_data_txt": "data/txt",
+  "path_test_data": "data_for_test/test_data.json",
+  "path_save_test_results": "data_for_test/results_test_data.csv",
   "path_model_qa": "my_model",
   "path_result_model_qa_fine_tuning": "results",
   "model_name_qa": "AlexKay/xlm-roberta-large-qa-multilingual-finedtuned-ru",
