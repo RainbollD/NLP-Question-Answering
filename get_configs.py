@@ -1,0 +1,64 @@
+import os
+import json
+import logging
+
+
+class Paths:
+    def __init__(self, config_path='configs.json'):
+        self.config_path = config_path
+        self.path_datasets = ''
+        self.path_raw_data_txt = ''
+        self.path_model_qa = ''
+        self.model_name = ''
+        self.path_result_model_qa_fine_tuning = ''
+        self.use_local = True
+        self.load_config()
+
+    def load_config(self):
+        self.is_path(self.config_path)
+
+        with open(self.config_path, 'r', encoding='utf8') as file:
+            data_configs = json.load(file)
+
+        self.path_datasets = data_configs.get('path_datasets', '')
+        self.path_raw_data_txt = data_configs.get('path_raw_data_txt', '')
+        self.path_model_qa = data_configs.get('path_model_qa', '')
+        self.model_name = data_configs.get('model_name_qa', '')
+        self.path_result_model_qa_fine_tuning = data_configs.get('path_result_model_qa_fine_tuning', '')
+        self.use_local = True if data_configs.get('use_local', '') == "True" else False
+
+    @staticmethod
+    def is_path(path):
+        if not os.path.exists(path):
+            logging.error(f"Файл {path} не найден.")
+            raise FileNotFoundError(f"Файл {path} не найден.")
+
+    def get_datasets_path(self):
+        return self.path_datasets
+
+    def get_raw_data_txt_path(self):
+        return self.path_raw_data_txt
+
+    def get_model_qa_path(self):
+        if self.use_local:
+            return self.path_model_qa
+        return self.model_name
+
+    def get_model_name(self):
+        return self.model_name
+
+    def get_path_result_model_qa_fine_tuning(self):
+        return self.path_result_model_qa_fine_tuning
+
+
+if __name__ == "__main__":
+    try:
+        print(1)
+        paths_instance = Paths()
+        print(1)
+        print(paths_instance.get_datasets_path())
+        print(paths_instance.get_raw_data_txt_path())
+        print(paths_instance.get_model_qa_path())
+        print(paths_instance.get_model_name())
+    except Exception as e:
+        logging.error(f"Ошибка: {e}")
