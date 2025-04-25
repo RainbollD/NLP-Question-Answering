@@ -4,5 +4,5 @@
   "path_model_qa": "my_model",
   "path_result_model_qa_fine_tuning": "results",
   "model_name_qa": "AlexKay/xlm-roberta-large-qa-multilingual-finedtuned-ru",
-  "use_local": "False"
+  "use_local": "True"
 }
