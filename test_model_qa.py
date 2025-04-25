@@ -12,6 +12,12 @@ def read_json():
 
 
 def compare_answers(answer_test, answer_model):
+    """
+    Compare words in each sentence
+    :param answer_test:
+    :param answer_model:
+    :return:
+    """
     answer_test = answer_test.lower().strip()
     answer_model = answer_model.lower().strip()
 
@@ -29,10 +35,11 @@ def compare_answers(answer_test, answer_model):
 
     return match_percentage
 
+
 def save_results_csv(answers_test, answers_model, percentages):
+    """Save answer_test answers_model percentages to csv"""
     with open(Paths().get_path_save_test_results(), 'w', newline='',
               encoding='utf-8') as file:
-
         writer = csv.writer(file)
         writer.writerow(['answer_test', 'answer_model', 'percentage'])
 
