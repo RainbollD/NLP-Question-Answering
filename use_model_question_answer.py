@@ -13,9 +13,10 @@ def create_model():
 
 def predict_qa(data_questions_answers):
     """
+    Create function-model and add answers in the loop
     :type data_questions_answers: list
     :param data_questions_answers:
-    :return:
+    :return: list of answers
     """
     model_qa = create_model()
     predictions = []

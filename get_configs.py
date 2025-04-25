@@ -34,28 +34,31 @@ class Paths:
             raise FileNotFoundError(f"Файл {path} не найден.")
 
     def get_datasets_path(self):
+        """Path for data"""
         return self.path_datasets
 
     def get_raw_data_txt_path(self):
+        """Path to data without cleaning"""
         return self.path_raw_data_txt
 
     def get_model_qa_path(self):
+        """Path to model"""
         if self.use_local:
             return self.path_model_qa
         return self.model_name
 
     def get_model_name(self):
+        """Model name"""
         return self.model_name
 
     def get_path_result_model_qa_fine_tuning(self):
+        """Path to fine-turing model"""
         return self.path_result_model_qa_fine_tuning
 
 
 if __name__ == "__main__":
     try:
-        print(1)
         paths_instance = Paths()
-        print(1)
         print(paths_instance.get_datasets_path())
         print(paths_instance.get_raw_data_txt_path())
         print(paths_instance.get_model_qa_path())
