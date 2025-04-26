@@ -36,29 +36,29 @@ def compare_answers(answer_test, answer_model):
     return match_percentage
 
 
-def save_results_csv(answers_test, answers_model, percentages):
+def save_results_csv(tests_data, answers_model, percentages):
     """Save answer_test answers_model percentages to csv"""
     with open(Paths().get_path_save_test_results(), 'w', newline='',
               encoding='utf-8') as file:
         writer = csv.writer(file)
-        writer.writerow(['answer_test', 'answer_model', 'percentage'])
+        writer.writerow(['question', 'text', 'answer_test', 'answer_model', 'percentage'])
 
-        for answer_test, answer_model, percentage in zip(answers_test, answers_model, percentages):
-            writer.writerow([answer_test, answer_model, str(percentage)])
+        for answer_test, answer_model, percentage in zip(tests_data, answers_model, percentages):
+            writer.writerow([*answer_test.values(), answer_model, str(percentage)])
 
 
 def test():
     tests_data = read_json()
+
     answers_model = predict_qa(tests_data)
 
     match_percentages = []
-    answer_test = []
 
     for answer_model, test_data in zip(answers_model, tests_data):
-        answer_test.append(test_data["answer"])
-        match_percentages.append(compare_answers(answer_test[-1], answer_model))
+        answer_test = test_data["answer"]
+        match_percentages.append(compare_answers(answer_test, answer_model))
 
-    save_results_csv(answer_test, answers_model, match_percentages)
+    save_results_csv(tests_data, answers_model, match_percentages)
 
 
 if __name__ == "__main__":
