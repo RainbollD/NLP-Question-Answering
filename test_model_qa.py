@@ -13,7 +13,8 @@ def read_json():
 
 def compare_answers(answer_test, answer_model):
     """
-    Compare words in each sentence
+    Counts the same number of words and
+    divides by the length of the unique characters of the answers in answer_test
     :param answer_test:
     :param answer_model:
     :return:
