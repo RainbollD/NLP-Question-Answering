@@ -1,6 +1,7 @@
 test.py
 my_model
 fine_tuning_qa_model.py
+prepare_data.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
