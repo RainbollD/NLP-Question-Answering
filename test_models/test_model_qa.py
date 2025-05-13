@@ -1,6 +1,8 @@
-from use_model_question_answer import predict_qa
 import json
 import csv
+import os
+
+from model_rus.use_model_qa_ru import predict_ru_qa
 from get_configs import Paths
 
 
@@ -38,8 +40,8 @@ def compare_answers(answer_test, answer_model):
 
 
 def save_results_csv(tests_data, answers_model, percentages):
-    """Save answer_test answers_model percentages to csv"""
-    with open(Paths().get_path_save_test_results(), 'w', newline='',
+    """Save question, text, answer, model answer, percentage to csv"""
+    with open(os.path.join(Paths().get_path_save_test_results(), ), 'w', newline='',
               encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(['question', 'text', 'answer_test', 'answer_model', 'percentage'])
@@ -51,7 +53,15 @@ def save_results_csv(tests_data, answers_model, percentages):
 def test():
     tests_data = read_json()
 
-    answers_model = predict_qa(tests_data)
+    answers_model = []
+
+    for test_data in tests_data:
+
+        question = test_data['question']
+        context = test_data['context']
+
+        prediction = predict_ru_qa(question, context)
+        answers_model.append(prediction)
 
     match_percentages = []
 
