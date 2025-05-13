@@ -4,7 +4,7 @@ import logging
 
 
 class Paths:
-    def __init__(self, config_path='configs.json'):
+    def __init__(self, config_path=r'.\configs.json'):
         self.config_path = config_path
         self.path_datasets = ''
         self.path_test_data = ''
@@ -32,7 +32,6 @@ class Paths:
     @staticmethod
     def is_path(path):
         if not os.path.exists(path):
-            logging.error(f"Файл {path} не найден.")
             raise FileNotFoundError(f"Файл {path} не найден.")
 
     def get_datasets_path(self):
@@ -66,7 +65,7 @@ if __name__ == "__main__":
     try:
         paths_instance = Paths()
         print(paths_instance.get_datasets_path())
-        print(paths_instance.get_raw_data_txt_path())
+        print(paths_instance.get_path_test_data())
         print(paths_instance.get_model_qa_path())
         print(paths_instance.get_model_name())
     except Exception as e:

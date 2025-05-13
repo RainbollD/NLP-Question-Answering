@@ -1,8 +1,9 @@
 test.py
-my_model
-trash
+model_rus/my_model
+vlad_data
 fine_tuning_qa_model.py
 prepare_data.py
+test_other_modela.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
