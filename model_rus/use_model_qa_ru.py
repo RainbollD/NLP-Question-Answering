@@ -8,7 +8,7 @@ def get_device():
 
 
 def load_model():
-    return pipeline("question-answering", model=Paths().get_model_qa_path())
+    return pipeline("question-answering", model=Paths().get_model_rus_qa_path())
 
 
 def predict_ru_qa(question, context):
