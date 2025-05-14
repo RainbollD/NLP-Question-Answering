@@ -2,7 +2,7 @@ import torch
 from transformers import AutoTokenizer, BertForQuestionAnswering, logging
 
 from model_en_ru.translator import *
-from get_configs import Paths
+from congigs_dir.get_configs import Paths
 
 logging.set_verbosity_error()
 
@@ -47,3 +47,8 @@ def predict_from_ru_en(question_ru, text_ru):
     answer_ru = translate_en_ru(answer_en)
 
     return answer_ru
+
+if __name__ == '__main__':
+    question = "Ты кто?"
+    context = "Я dragon"
+    print(predict_from_ru_en(question, context))
