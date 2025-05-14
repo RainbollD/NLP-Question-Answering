@@ -1,5 +1,5 @@
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer
-from get_configs import Paths
+from congigs_dir.get_configs import Paths
 
 # Prepare name and path to save
 model_name = Paths().get_model_name()

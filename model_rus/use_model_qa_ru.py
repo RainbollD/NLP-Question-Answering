@@ -1,6 +1,6 @@
 from transformers import pipeline
 import torch
-from get_configs import Paths
+from congigs_dir.get_configs import Paths
 
 
 def get_device():
