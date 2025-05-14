@@ -20,5 +20,7 @@ def predict_ru_qa(question, context):
 
     result = model_qa(question=question, context=context)
 
-    return result['answer']
+    if result['answer'] is not None:
+        return result['answer']
+    return 'None'
 

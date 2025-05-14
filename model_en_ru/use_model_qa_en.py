@@ -33,7 +33,9 @@ def predict_en_qa(question, text):
     predict_answer_tokens = inputs.input_ids[0, answer_start_index: answer_end_index + 1]
     answer = tokenizer.decode(predict_answer_tokens, skip_special_tokens=True)
 
-    return answer
+    if answer is not None:
+        return answer
+    return 'None'
 
 
 def predict_from_ru_en(question_ru, text_ru):
