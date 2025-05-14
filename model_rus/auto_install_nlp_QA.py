@@ -3,7 +3,7 @@ from get_configs import Paths
 
 # Prepare name and path to save
 model_name = Paths().get_model_name()
-path_model_save = Paths().get_model_qa_path()
+path_model_save = Paths().get_model_rus_qa_path()
 
 # Create model and tokenizer for this model
 model = AutoModelForQuestionAnswering.from_pretrained(model_name)
