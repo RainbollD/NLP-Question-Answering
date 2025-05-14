@@ -4,13 +4,14 @@ import logging
 
 
 class Paths:
-    def __init__(self, config_path=r'C:\Users\Lev\NLP-Question-Answering\configs.json'):
+    def __init__(self, config_path=r'C:\Users\Lev\NLP-Question-Answering\congigs_dir\configs.json'):
         self.config_path = config_path
         self.path_datasets = ''
         self.path_test_data = ''
         self.path_save_test_results = ''
         self.path_model_qa = ''
         self.model_name_rus = ''
+        self.model_name_en_ru = ''
         self.path_result_model_qa_fine_tuning = ''
         self.use_local = True
         self.load_config()
@@ -32,7 +33,7 @@ class Paths:
 
     @staticmethod
     def is_path(path):
-        if not os.path.exists(path):
+        if not os.path.isfile(path):
             raise FileNotFoundError(f"Файл {path} не найден.")
 
     def get_datasets_path(self):
