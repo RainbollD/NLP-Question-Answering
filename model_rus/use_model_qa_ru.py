@@ -20,5 +20,5 @@ def predict_ru_qa(question, context):
 
     result = model_qa(question=question, context=context)
 
-    return result
+    return result['answer']
 
