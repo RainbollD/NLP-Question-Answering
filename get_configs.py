@@ -4,13 +4,13 @@ import logging
 
 
 class Paths:
-    def __init__(self, config_path=r'.\configs.json'):
+    def __init__(self, config_path=r'C:\Users\Lev\NLP-Question-Answering\configs.json'):
         self.config_path = config_path
         self.path_datasets = ''
         self.path_test_data = ''
         self.path_save_test_results = ''
         self.path_model_qa = ''
-        self.model_name = ''
+        self.model_name_rus = ''
         self.path_result_model_qa_fine_tuning = ''
         self.use_local = True
         self.load_config()
@@ -25,7 +25,8 @@ class Paths:
         self.path_test_data = data_configs.get('path_test_data', '')
         self.path_save_test_results = data_configs.get('path_save_test_results', '')
         self.path_model_qa = data_configs.get('path_model_qa', '')
-        self.model_name = data_configs.get('model_name_qa', '')
+        self.model_name_rus = data_configs.get('model_name_rus_qa', '')
+        self.model_name_en_ru = data_configs.get('model_name_en_ru_qa', '')
         self.path_result_model_qa_fine_tuning = data_configs.get('path_result_model_qa_fine_tuning', '')
         self.use_local = True if data_configs.get('use_local', '') == "True" else False
 
@@ -46,15 +47,19 @@ class Paths:
         """Path to save results"""
         return self.path_save_test_results
 
-    def get_model_qa_path(self):
+    def get_model_rus_qa_path(self):
         """Path to model"""
         if self.use_local:
             return self.path_model_qa
-        return self.model_name
+        return self.model_name_rus
+
+    def get_model_en_ru(self):
+        """Path to model"""
+        return self.model_name_en_ru
 
     def get_model_name(self):
         """Model name"""
-        return self.model_name
+        return self.model_name_rus
 
     def get_path_result_model_qa_fine_tuning(self):
         """Path to fine-turing model"""
@@ -66,7 +71,12 @@ if __name__ == "__main__":
         paths_instance = Paths()
         print(paths_instance.get_datasets_path())
         print(paths_instance.get_path_test_data())
-        print(paths_instance.get_model_qa_path())
+        print(paths_instance.get_path_save_test_results())
+        print(paths_instance.model_name_rus)
+        print(paths_instance.model_name_en_ru)
+        print(paths_instance.get_model_rus_qa_path())
         print(paths_instance.get_model_name())
+        print(paths_instance.get_path_result_model_qa_fine_tuning())
+        print()
     except Exception as e:
         logging.error(f"Ошибка: {e}")
