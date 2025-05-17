@@ -1,6 +1,6 @@
 test.py
 model_rus/my_model
-vlad_data
+test_models/vlad_data
 fine_tuning_qa_model.py
 prepare_data.py
 test_other_modela.py

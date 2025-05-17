@@ -1,9 +1,14 @@
 import json
 import csv
 import os
+import re
 
-from model_rus.use_model_qa_ru import predict_ru_qa
-from get_configs import Paths
+from translator import *
+from rouge import Rouge
+
+from use_model_question_answer import Models
+
+from configs_dir.get_configs import Paths
 
 
 def read_json():
@@ -13,64 +18,57 @@ def read_json():
     return test_data
 
 
-def compare_answers(answer_test, answer_model):
-    """
-    Counts the same number of words and
-    divides by the length of the unique characters of the answers in answer_test
-    :param answer_test:
-    :param answer_model:
-    :return:
-    """
-    answer_test = answer_test.lower().strip()
-    answer_model = answer_model.lower().strip()
-
-    words1 = set(answer_test.split())
-    words2 = set(answer_model.split())
-
-    matching_words = words1.intersection(words2)
-
-    total_unique_words = len(words1.union(words2))
-
-    if total_unique_words == 0:
-        return 0.0
-
-    match_percentage = (len(matching_words) / total_unique_words) * 100
-
-    return match_percentage
+def compare_answers(real_answer, model_answer):
+    # return fuzz.partial_ratio(answer_test, answer_model)
+    rouge = Rouge()
+    scores = rouge.get_scores(real_answer, model_answer)
+    return scores
 
 
-def save_results_csv(tests_data, answers_model, percentages):
+def save_results_csv(tests_data, model_answer, match_percentages, addition_name):
     """Save question, text, answer, model answer, percentage to csv"""
-    with open(os.path.join(Paths().get_path_save_test_results(), ), 'w', newline='',
+
+    model_name_for_csv = re.split(r'/|\\', addition_name)[0]
+    with open(os.path.join(Paths().get_path_save_test_results(), f"{model_name_for_csv}.csv"), 'w', newline='',
               encoding='utf-8') as file:
         writer = csv.writer(file)
-        writer.writerow(['question', 'text', 'answer_test', 'answer_model', 'percentage'])
+        writer.writerow(['question', 'context', 'answer', 'model_answer', 'match_percentages'])
 
-        for answer_test, answer_model, percentage in zip(tests_data, answers_model, percentages):
-            writer.writerow([*answer_test.values(), answer_model, str(percentage)])
+        for answer_test, answer_model, match_percentage in zip(tests_data, model_answer, match_percentages):
+            writer.writerow([*answer_test.values(), answer_model, str(match_percentage)])
 
 
-def test():
+def test_model_predictions(model_name, tests_data):
+    predictions = []
+    model = Models(model_name)
+    for test_data in tests_data:
+        question_en = translate_ru_en(test_data['question'])
+        context_en = translate_ru_en(test_data['context'])
+
+        result_en = model.predict(question_en, context_en)
+        result = translate_en_ru(result_en)
+
+        predictions.append(result)
+    return predictions
+
+
+def test_model_match_percentages(model_answers, real_answers):
+    match_percentages = []
+    for model_answer, real_answer in zip(model_answers, real_answers):
+        match_percentages.append(compare_answers(real_answer['answer'], model_answer))
+    return match_percentages
+
+
+def test_control():
     tests_data = read_json()
 
-    answers_model = []
+    model_names = Paths().get_model_names()
 
-    for test_data in tests_data:
-
-        question = test_data['question']
-        context = test_data['context']
-
-        prediction = predict_ru_qa(question, context)
-        answers_model.append(prediction)
-
-    match_percentages = []
-
-    for answer_model, test_data in zip(answers_model, tests_data):
-        answer_test = test_data["answer"]
-        match_percentages.append(compare_answers(answer_test, answer_model))
-
-    save_results_csv(tests_data, answers_model, match_percentages)
+    for model_name in model_names:
+        predictions = test_model_predictions(model_name, tests_data)
+        match_percentages = test_model_match_percentages(predictions, tests_data)
+        save_results_csv(tests_data, predictions, match_percentages, model_name.split('\\|/')[0])
 
 
 if __name__ == "__main__":
-    test()
+    test_control()

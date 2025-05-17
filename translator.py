@@ -10,5 +10,5 @@ def translate_ru_en(text):
 
 
 if __name__ == '__main__':
-    en_text = 'Привет мир'
-    print(translate_ru_en(en_text))
+    en_text = 'match percentages'
+    print(translate_en_ru(en_text))
