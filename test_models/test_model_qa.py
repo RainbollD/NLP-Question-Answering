@@ -1,13 +1,13 @@
-import json
-import csv
 import os
 import re
+import json
+import csv
 
 from translator import *
-from rouge import Rouge
+from bert_score import score
+from tqdm import tqdm
 
 from use_model_question_answer import Models
-
 from configs_dir.get_configs import Paths
 
 
@@ -19,10 +19,8 @@ def read_json():
 
 
 def compare_answers(real_answer, model_answer):
-    # return fuzz.partial_ratio(answer_test, answer_model)
-    rouge = Rouge()
-    scores = rouge.get_scores(real_answer, model_answer)
-    return scores
+    P, R, F1 = score([model_answer], [real_answer], lang="ru", model_type="bert-base-multilingual-cased")
+    return {"P": P.item(), "R": R.item(), "F1": F1.item()}
 
 
 def save_results_csv(tests_data, model_answer, match_percentages, addition_name):
@@ -62,9 +60,9 @@ def test_model_match_percentages(model_answers, real_answers):
 def test_control():
     tests_data = read_json()
 
-    model_names = Paths().get_model_names()
-
-    for model_name in model_names:
+    #model_names = Paths().get_model_names()
+    model_names = ['']
+    for model_name in tqdm(model_names):
         predictions = test_model_predictions(model_name, tests_data)
         match_percentages = test_model_match_percentages(predictions, tests_data)
         save_results_csv(tests_data, predictions, match_percentages, model_name.split('\\|/')[0])

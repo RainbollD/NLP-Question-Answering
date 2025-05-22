@@ -1,5 +1,5 @@
 import torch
-from transformers import AutoTokenizer, AutoModelForQuestionAnswering, logging
+from transformers import pipeline, AutoTokenizer, AutoModelForQuestionAnswering, logging
 
 logging.set_verbosity_error()
 
@@ -15,7 +15,7 @@ class Models:
 
         return tokenizer, model
 
-    def predict(self, question, text):
+    def detailed_predict(self, question, text):
         """Get prediction model in ENGLISH"""
         tokenizer, model = self.get_model_tokenizer()
 
@@ -34,19 +34,25 @@ class Models:
 
         return answer if answer else 'None'  # Возвращаем ответ или 'None', если ответ пустой
 
+    def get_model_pipeline(self):
+        return pipeline("question-answering", model=self.model_name)
+
+    def predict(self, question, text):
+        model = self.get_model_pipeline()
+        return model(question=question, context=text)['answer'].strip()
 
 if __name__ == '__main__':
     question = "Как тебя зовут?"
     context = "Меня зовут никто"
     try:
-        #question_en = translate_ru_en(question)
-        #context_en = translate_ru_en(context)
+        # question_en = translate_ru_en(question)
+        # context_en = translate_ru_en(context)
         print(f"Translated question: {question}")
         print(f"Translated context: {context}")
 
-        model = Models('AlexKay/xlm-roberta-large-qa-multilingual-finedtuned-ru')
+        model = Models('TIGER-Lab/general-verifier')
         prediction = model.predict(question, context)
-        #prediction = translate_en_ru(prediction)
+        # prediction = translate_en_ru(prediction)
         print("Answer:", prediction)
     except Exception as e:
         print(f"Error: {e}")
