@@ -132,7 +132,7 @@ def test_different_data_control():
         save_results_different_csv(tests_data, predictions, match_percentages, model_name.split('\\|/')[0])
 
 
-def test_vlad_data_control():
+def test_txt_data_control():
     paths = Paths()
 
     context = read_txt(paths.get_path_vlad_context())
@@ -147,4 +147,4 @@ def test_vlad_data_control():
 
 
 if __name__ == "__main__":
-    test_vlad_data_control()
+    test_txt_data_control()
