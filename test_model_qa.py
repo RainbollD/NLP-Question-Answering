@@ -45,7 +45,7 @@ def save_results_different_csv(tests_data, model_answer, match_percentages, addi
 
 
 def save_results_one_csv(model_answer, addition_name):
-    """Save question, text, answer, model answer, percentage to csv"""
+    """Save on column results of model to csv"""
     if addition_name is None:
         addition_name = 'question-answering'
 
@@ -55,6 +55,17 @@ def save_results_one_csv(model_answer, addition_name):
 
 
 def test_model_predictions_json(model_name, tests_data):
+    """
+    Tasks:
+    1) Create class for using model
+    2) Take every part of data like {"question": "...", "context": "...", "answer": "..."}
+    3) Translate context and question from russia to english
+    4) Get english answer
+    5) Translate answer to russia
+    :param model_name:
+    :param tests_data:
+    :return: list of predictions
+    """
     predictions = []
     model = Models(model_name)
     for test_data in tests_data:
@@ -69,6 +80,16 @@ def test_model_predictions_json(model_name, tests_data):
 
 
 def test_model_predictions_txt(model_name, context, questions):
+    """
+    Tasks:
+    1) Create class for using model
+    2) Translate context and question from russia to english
+    3) Get english answer
+    4) Translate answer to russia
+    :param model_name:
+    :param tests_data:
+    :return: list of predictions
+    """
     predictions = []
     model = Models(model_name)
     context_en = translate_ru_en(' '.join(context))
@@ -84,6 +105,7 @@ def test_model_predictions_txt(model_name, context, questions):
 
 
 def test_model_match_percentages(model_answers, real_answers):
+    """Get dict of the percentages"""
     match_percentages = []
     for model_answer, real_answer in zip(model_answers, real_answers):
         match_percentages.append(compare_answers(real_answer['answer'], model_answer))
@@ -91,7 +113,13 @@ def test_model_match_percentages(model_answers, real_answers):
 
 
 def is_csv_for_all_results(questions):
-    path = r"C:\Users\Lev\NLP-Question-Answering\test_models\vlad_data\results\result_all_models.csv"
+    """
+    Tasks:
+    1) Checks for a folder. If it isn't then create folder with column 'Question'.
+    2) Checks all questions in file and add the ones that aren't there
+    :param questions:
+    """
+    path = Paths().get_path_save_vlad_results()
 
     def create_csv_file_if_none():
         """Initializes the CSV file with a header if it doesn't exist."""
@@ -123,6 +151,13 @@ def is_csv_for_all_results(questions):
 
 
 def test_different_data_control():
+    """
+    Tasks:
+    1) From json file like {{"question": "...", "context": "...", "answer": "..."}, ...} get data
+    2) Get list of predictions
+    3) Count match percentages for everyone
+    4) Save data
+    """
     tests_data = read_json()
 
     model_names = Paths().get_model_names()
@@ -133,6 +168,12 @@ def test_different_data_control():
 
 
 def test_txt_data_control():
+    """
+    Tasks:
+    1) From txt files
+    2) Get list of predictions
+    3) Save data
+    """
     paths = Paths()
 
     context = read_txt(paths.get_path_vlad_context())
