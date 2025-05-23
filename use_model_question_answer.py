@@ -5,7 +5,7 @@ logging.set_verbosity_error()
 
 
 class Models:
-    def __init__(self, model_name):
+    def __init__(self, model_name = None):
         self.model_name = model_name
 
     def get_model_tokenizer(self):
@@ -35,7 +35,9 @@ class Models:
         return answer if answer else 'None'  # Возвращаем ответ или 'None', если ответ пустой
 
     def get_model_pipeline(self):
-        return pipeline("question-answering", model=self.model_name)
+        if self.model_name is not None:
+          return pipeline("question-answering", model=self.model_name)
+        return pipeline("question-answering")
 
     def predict(self, question, text):
         model = self.get_model_pipeline()
