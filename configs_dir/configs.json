@@ -1,7 +1,11 @@
 {
-  "path_test_data": "C:\\Users\\Lev\\NLP-Question-Answering\\test_models\\test_data.json",
-  "path_save_test_results": "C:\\Users\\Lev\\NLP-Question-Answering\\test_models",
+  "path_test_data": "C:\\Users\\Lev\\NLP-Question-Answering\\test_models\\different_data\\test_data.json",
+  "path_save_test_results": "C:\\Users\\Lev\\NLP-Question-Answering\\test_models\\different_data\\results",
+  "path_vlad_context": "C:\\Users\\Lev\\NLP-Question-Answering\\test_models\\vlad_data\\Context.txt",
+  "path_vlad_question": "C:\\Users\\Lev\\NLP-Question-Answering\\test_models\\vlad_data\\Questions.txt",
+  "path_save_vlad_results": "C:\\Users\\Lev\\NLP-Question-Answering\\test_models\\vlad_data\\results",
   "model_names": [
+    "None",
     "VietAI/vit5-base",
     "timpal0l/mdeberta-v3-base-squad2",
     "monologg/koelectra-base-v3-finetuned-korquad",
