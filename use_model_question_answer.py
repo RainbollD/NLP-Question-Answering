@@ -16,7 +16,7 @@ class Models:
         return tokenizer, model
 
     def predict_tokenizer(self, question, text):
-        """Get prediction model in ENGLISH"""
+        """Get prediction model"""
         tokenizer, model = self.get_model_tokenizer()
 
         inputs = tokenizer(question, text, return_tensors="pt", truncation=True, padding=True)
