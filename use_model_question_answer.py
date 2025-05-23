@@ -15,7 +15,7 @@ class Models:
 
         return tokenizer, model
 
-    def detailed_predict(self, question, text):
+    def predict_tokenizer(self, question, text):
         """Get prediction model in ENGLISH"""
         tokenizer, model = self.get_model_tokenizer()
 
@@ -27,12 +27,12 @@ class Models:
         end_scores = outputs.end_logits
 
         answer_start_index = torch.argmax(start_scores)
-        answer_end_index = torch.argmax(end_scores) + 1  # +1 чтобы включить последний токен
+        answer_end_index = torch.argmax(end_scores) + 1
 
         predict_answer_tokens = inputs.input_ids[0, answer_start_index: answer_end_index]
         answer = tokenizer.decode(predict_answer_tokens, skip_special_tokens=True)
 
-        return answer if answer else 'None'  # Возвращаем ответ или 'None', если ответ пустой
+        return answer if answer else 'None'
 
     def get_model_pipeline(self):
         if self.model_name is not None:
