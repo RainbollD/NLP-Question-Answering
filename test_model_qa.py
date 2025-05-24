@@ -177,7 +177,7 @@ def test_txt_data_control():
     paths = Paths()
 
     context = read_txt(paths.get_path_vlad_context())
-    questions_data = read_txt(paths.get_path_vlad_question())
+    questions_data = list(set(read_txt(paths.get_path_vlad_question())))
 
     model_names = Paths().get_model_names()
     for model_name in tqdm(model_names):
